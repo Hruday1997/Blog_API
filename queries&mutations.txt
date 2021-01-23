@@ -1,0 +1,132 @@
+createPost:creates post in database
+
+mutation createPost{
+  createPost(input: {
+    title:"GraphQL"
+    description:"GraphQL"
+    author:"Hruday"
+  }){
+  post{
+    id
+    title
+    description
+    publishDate
+    author
+}
+}
+}
+
+------------------------------------------------------------------------------------------------------------------------------
+updatePost:updates the post based on "id",returns error("Post matching query does not exist") if "id" doesnot exists in database
+
+mutation updatePost{
+  updatePost(id:2,input: {
+    title:"GraphQL"
+    description:"python"
+    author:"Yeswanth"
+  }){
+  post{
+    id
+    title
+    description
+    publishDate
+    author
+}
+}
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------
+createComment:creates comment in the database for posts based on post "id",returns error("Post matching query does not exist")
+if posts "id" doesnot exists in database
+
+mutation createComment{
+  createComment(input: {
+    posts:[
+      {
+    id:2
+    }
+    ]
+    text:"bad developer"
+    author:"Hruday"
+  }){
+  comment{
+    id
+    posts{
+      id
+      title
+      description
+      publishDate
+      author
+    }
+    text
+    author
+}
+}
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+deleteComment:delete comments based on id,return error("Comment matching query does not exist") if id doesnot exists in database
+
+mutation deleteComment{
+  deleteComment(id:3) {
+  comment{
+    id
+    text
+    author
+  }
+}
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+posts:fetch all posts in database.
+
+query{
+  posts{
+    id,
+    title,
+    description,
+    publishDate,
+    author
+    
+  }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+posts:fetches all posts and its comments,returns comments a empty list,if no comments for the post.
+
+query{
+  posts{
+    id
+    title
+    description
+    publishDate
+    author
+    commentSet{
+      id
+      text
+      author
+      
+    }
+  }
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+post($id):fetches post based on id and their comments,returns error("Post matching query does not exist") if id doesnot exists in database.
+
+query{
+  post(id:2){
+    id
+    title
+    description
+    publishDate
+    author
+    commentSet{
+      id
+      text
+      author
+      
+    }
+  }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
